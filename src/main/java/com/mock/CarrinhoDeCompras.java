@@ -5,9 +5,15 @@ import java.util.List;
 
 public class CarrinhoDeCompras {
     private List<Produto> itens = new ArrayList<>();
+    private List<ObservadorCarrinho> observadores = new ArrayList<>();
 
     public void adicionarProduto(Produto p) {
         itens.add(p);
+        for(ObservadorCarrinho observador : observadores) {
+            try {
+                observador.produtoFoiAdcionado(p.getNome(), p.getValor());
+            } catch (Exception e) {}
+        }
     }
     public int total(){
         int total = 0;
@@ -19,6 +25,6 @@ public class CarrinhoDeCompras {
     }
 
     public void adicionaObservador(ObservadorCarrinho observador) {
-
+        observadores.add(observador);
     }
 }
